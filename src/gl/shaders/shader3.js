@@ -2,7 +2,7 @@
 const THREE = require('THREE')
 
 /**
- *  使用 uv 变量实现简单的渐变闪烁
+ *  使用 uv 和 time 实现随机的显示效果
  *  来源于 threejs example
  */
 
@@ -27,23 +27,20 @@ uniform float u_time;
 varying vec2 vUv;
 
 void main(void) {
-  // vec2 position =  -100.0 + 200.0 * vUv;
-  vec2 position =  -1.0 + 2.0 * vUv;
+  vec2 position = vUv;
 
-  float red = abs( sin(position.x * position.y + u_time / 5.0) );
-  float green = abs( sin(position.x * position.y + u_time / 4.0) );
-  float blue = abs( sin(position.x * position.y + u_time / 3.0) );
+  float color = 0.0;
+  color += sin( position.x * cos(u_time / 15.0 ) * 80.0 ) + cos( position.y * cos( u_time / 15.0 ) * 10.0 );
+  color += sin( position.x * sin(u_time / 10.0 ) * 40.0 ) + cos( position.y * sin( u_time / 25.0 ) * 40.0 );
+  color += sin( position.x * sin(u_time / 5.0 ) * 10.0 ) + sin( position.y * sin( u_time / 35.0 ) * 80.0 );
+  color *= sin( u_time / 10.0 ) * 0.5;
 
-  gl_FragColor = vec4(red, green, blue, 1.0);
+
+  gl_FragColor = vec4(vec3( color, color * 0.5, sin( color + u_time / 3.0 ) * 0.75 ), 1.0);
 }
-
 
 `
 
-
-/**
- * gl_FragColor： 片元着色器内建变量，设置像素的颜色
- */
 
 const shaderParam = {
   uniforms:   {
