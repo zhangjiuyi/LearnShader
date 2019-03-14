@@ -53,7 +53,7 @@ const shaderParam = {
 
 
 
-THREE.ScaleMaterial = () => {
+THREE.Shader1 = () => {
   return new THREE.ShaderMaterial(shaderParam)
 }
 

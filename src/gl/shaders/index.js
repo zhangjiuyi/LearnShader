@@ -1,5 +1,3 @@
-
-
-
-import './blink'  // 闪烁shader
-import './scale'
+import './shader1' 
+import './shader2'  
+import './shader3'  
