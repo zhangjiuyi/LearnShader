@@ -2,7 +2,7 @@
 const THREE = require('THREE')
 
 /**
- *  使用贴图实现的无线内循环不知道怎么形容的效果
+ *  使用贴图实现的无限内循环不知道怎么形容的效果
  *  来源于 threejs example
  */
 

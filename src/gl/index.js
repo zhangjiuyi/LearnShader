@@ -35,7 +35,8 @@ class GL  {
     // var material = new THREE.Shader1()  
     // var material = new THREE.Shader2()  
     // var material = new THREE.Shader3()  
-    var material = new THREE.Shader4()  
+    // var material = new THREE.Shader4()  
+    var material = new THREE.Shader5()  
 
 
     this.plane = new THREE.Mesh( geometry, material );
