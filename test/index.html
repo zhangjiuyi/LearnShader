@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  html, body, #container {
+    height: 100%;
+  }
+  #container {
+    border: 1px solid red;
+  }
+  
+  </style>
+  <script src='./three.js'></script>
+</head>
+<body>
+  <div id="container">
+  </div>
+
+
+  <script>  
+  
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xe4e3de);
+  var camera =  new THREE.PerspectiveCamera();
+  var renderer = new THREE.WebGLRenderer({
+      antialias: true
+    })
+
+  var dom = document.querySelector('#container');
+  camera.aspect = dom.clientWidth / dom.clientHeight;
+  camera.lookAt(camera.position);
+  camera.position.set( 7, 1, 40 );
+  camera.updateProjectionMatrix();
+
+
+  renderer.setSize( dom.clientWidth, dom.clientHeight );
+  renderer.setPixelRatio(window.devicePixelRatio);
+  dom.appendChild(renderer.domElement)
+
+  showSpaire()
+
+  renderer.setAnimationLoop( () => {
+    renderer.render(scene,camera);
+    // controls.update();
+
+    var a = scene.getObjectByName('te')
+    // if (a) {
+      
+    // }
+  })
+    
+
+
+  function showSpaire() {
+    var spriteMaterial = new THREE.SpriteMaterial( { 
+      color: 0x000000,
+      // size: 210.0
+    });
+
+    var sprite = new THREE.Sprite( spriteMaterial );
+    sprite.name ='te'
+    sprite.scale.set(20, 20, 1)
+    console.log(sprite)
+    scene.add( sprite );
+  }
+    
+    
+    
+    
+    
+  </script>
+  
+</body>
+</html>

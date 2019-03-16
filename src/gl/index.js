@@ -28,14 +28,18 @@ class GL  {
   showPlane () {
     var geometry = new THREE.PlaneBufferGeometry( 20, 20, 32 );
 
-    // var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
 
-    // var material = new THREE.BlinkMaterial()  // 闪烁 shader
-    var material = new THREE.ScaleMaterial()  // 闪烁 shader
+    /**
+     *  材质列表 
+     */
+    // var material = new THREE.Shader1()  
+    // var material = new THREE.Shader2()  
+    // var material = new THREE.Shader3()  
+    // var material = new THREE.Shader4()  
+    var material = new THREE.Shader5()  
 
 
     this.plane = new THREE.Mesh( geometry, material );
-
     this.scene.add(this.plane)
 
     // var sprite = new THREE.Sprite( material );
@@ -65,6 +69,7 @@ class GL  {
     if (this.plane) {
       this.plane.material.uniforms.u_time.value = idx+=0.05
     }
+    // console.log(Math.sqrt(idx))
   }
 }
 
