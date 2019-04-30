@@ -26,8 +26,39 @@ class GL  {
   }
 
   showPlane () {
-    var geometry = new THREE.PlaneBufferGeometry( 20, 20, 32 );
 
+    // const count = 10000;
+
+    this.geometry = new THREE.BoxBufferGeometry( 10, 10, 10 );
+    
+    console.log(this.geometry)
+
+    const amount = this.geometry.attributes.position.count 
+    console.log('数量：' + amount)
+
+
+    this.a_size   = new Float32Array( amount );
+    this.customColor  = new Float32Array( amount * 3 );
+    console.log(this.customColor)
+
+    var color = new THREE.Color( 0xffffff );
+    console.log(this.geometry.attributes.position.array.length)
+
+    for ( var i = 0; i < amount; i ++ ) {
+      if (this.geometry.attributes.position.array[i*3] > 0) {
+        color.setHSL( 0.5 + 0.1 * ( i / amount ), 0.7, 0.5 );
+      } else {
+        color.setHSL( 0.5 - 0.3 * ( i / amount ), 0.7, 0.5 );
+      }
+
+      this.a_size[i] = 10
+
+      color.toArray( this.customColor, i * 3 );
+    }
+    console.log(this.customColor)
+
+    this.geometry.addAttribute( 'a_size', new THREE.BufferAttribute( this.a_size, 1 ) );
+    this.geometry.addAttribute( 'customColor', new THREE.BufferAttribute( this.customColor, 3 ) );
 
     /**
      *  材质列表 
@@ -36,10 +67,11 @@ class GL  {
     // var material = new THREE.Shader2()  
     // var material = new THREE.Shader3()  
     // var material = new THREE.Shader4()  
-    var material = new THREE.Shader5()  
+    // var material = new THREE.Shader5()  
+    var material = new THREE.Shader6()  
 
 
-    this.plane = new THREE.Mesh( geometry, material );
+    this.plane = new THREE.Points( this.geometry, material );
     this.scene.add(this.plane)
 
     // var sprite = new THREE.Sprite( material );
@@ -64,13 +96,35 @@ class GL  {
   }
 
   render () {
+    var time = Date.now() * 0.005;
+
     this.renderer.render(this.scene,this.camera);
     this.controls.update();
+
+    var attributes = this.geometry.attributes;
+
+    console.log(attributes)
+    for ( var i = 0; i < attributes.a_size.array.length; i ++ ) {
+      attributes.a_size.array[ i ] = 14 + 13 * Math.sin( 0.1 * i + time );
+    }
+
+    attributes.a_size.needsUpdate = true;
+
+
+    // for ( var i = 0; i < this.displacement.length; i ++ ) {
+    //   // console.log(this.displacement[ 0])
+    //   this.displacement[ i ] = Math.sin( 0.1 * i + time );
+
+    // }
+    // this.geometry.attributes.displacement.needsUpdate = true;
+
     if (this.plane) {
-      this.plane.material.uniforms.u_time.value = idx+=0.05
+      // this.plane.material.uniforms.color.value.offsetHSL( 0.0001, 0.0001, 0 );
     }
     // console.log(Math.sqrt(idx))
   }
 }
+
+
 
 export default GL
